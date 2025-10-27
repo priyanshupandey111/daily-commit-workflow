@@ -2,9 +2,12 @@ name: Daily Commit Workflow
 
 on:
   schedule:
-    # Runs every day at 10:55 AM UTC (adjust if needed)
-    - cron: "55 10 * * *"
-  workflow_dispatch:  # allow manual trigger
+    # Runs daily at 05:25 UTC (10:55 AM IST)
+    - cron: "25 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write    # ✅ REQUIRED for pushing commits
 
 jobs:
   daily-commit:
@@ -13,6 +16,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # ✅ use built-in token
 
       - name: Update timestamp (23f1001717@ds.study.iitm.ac.in)
         run: |
